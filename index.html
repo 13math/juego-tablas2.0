@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplicaciones Rápidas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #e8f5e9;
+            color: #333;
+        }
+        .game-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            max-width: 400px;
+            background-color: #fff;
+        }
+        input[type="number"] {
+            font-size: 20px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        button:hover {
+            background-color: #388e3c;
+        }
+        select {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .result {
+            font-size: 1.8em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Multiplicaciones Rápidas</h1>
+    <p>Selecciona una tabla de multiplicar o elige aleatorio para practicar.</p>
+    <div class="game-container">
+        <select id="tableSelect">
+            <option value="random">Aleatorio</option>
+            <option value="1">Tabla del 1</option>
+            <option value="2">Tabla del 2</option>
+            <option value="3">Tabla del 3</option>
+            <option value="4">Tabla del 4</option>
+            <option value="5">Tabla del 5</option>
+            <option value="6">Tabla del 6</option>
+            <option value="7">Tabla del 7</option>
+            <option value="8">Tabla del 8</option>
+            <option value="9">Tabla del 9</option>
+            <option value="10">Tabla del 10</option>
+        </select>
+        <p id="problem"></p>
+        <input type="number" id="answer" placeholder="Escribe tu respuesta">
+        <button onclick="checkAnswer()">Comprobar</button>
+        <p class="result" id="result"></p>
+    </div>
+
+    <script>
+        let selectedTable = "random";
+        let num1 = Math.floor(Math.random() * 10) + 1;
+        let num2 = Math.floor(Math.random() * 10) + 1;
+
+        const problemElement = document.getElementById('problem');
+        const resultElement = document.getElementById('result');
+        const tableSelect = document.getElementById('tableSelect');
+
+        function generateProblem() {
+            if (selectedTable === "random") {
+                num1 = Math.floor(Math.random() * 10) + 1;
+            } else {
+                num1 = parseInt(selectedTable);
+            }
+            num2 = Math.floor(Math.random() * 10) + 1;
+            problemElement.textContent = `¿Cuánto es ${num1} x ${num2}?`;
+        }
+
+        tableSelect.addEventListener('change', () => {
+            selectedTable = tableSelect.value;
+            generateProblem();
+            resultElement.textContent = ""; // Limpiar el mensaje
+            document.getElementById('answer').value = ""; // Limpiar el campo de respuesta
+        });
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            const correctAnswer = num1 * num2;
+
+            if (userAnswer === correctAnswer) {
+                resultElement.textContent = '¡Correcto! 🎉';
+                resultElement.style.color = 'green';
+            } else {
+                resultElement.textContent = 'Intenta de nuevo. ❌';
+                resultElement.style.color = 'red';
+            }
+
+            document.getElementById('answer').value = '';
+            generateProblem();
+        }
+
+        // Generar el primer problema al cargar la página
+        generateProblem();
+    </script>
+</body>
+</html>
